@@ -1,0 +1,90 @@
+<div class="container mt-5">
+  <h2 class="text-center mb-4">All Coupons</h2>
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <div class="d-flex justify-content-between mb-3">
+        <a class="btn btn-primary" routerLink="create">
+          <i class="fas fa-plus-circle me-2"></i>Create Coupons
+        </a>
+        <div class="input-group w-auto">
+          <input (change)="searchData(searchInput.value)" #searchInput class="form-control" type="search"
+            placeholder="Search coupons" aria-label="Search">
+          <span class="input-group-text"><i class="fas fa-search"></i></span>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead class="table-light">
+            <tr>
+              <th>#</th>
+              <th>ID</th>
+              <th>Coupon Name</th>
+              <th>Discount</th>
+              <th>Expire Time</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for(coupon of coupons; track coupon._id){
+            <tr>
+              <td>{{$index + 1}}</td>
+              <td><span class="badge bg-secondary">{{coupon?._id|slice:-4}}</span></td>
+              <td>{{coupon?.name}}</td>
+              <td><span class="badge bg-success">{{coupon?.discount}}%</span></td>
+              <td>{{coupon?.expireTime|date}}</td>
+              <td>
+                <a [routerLink]="['/coupons',coupon._id,'update']" class="btn btn-outline-primary btn-sm me-2">
+                  <i class="fas fa-edit"></i> Update
+                </a>
+                <button (click)="deleteCoupon(coupon._id)" class="btn btn-outline-danger btn-sm">
+                  <i class="fas fa-trash-alt"></i> Delete
+                </button>
+              </td>
+            </tr>
+            }
+            @empty {
+            <tr>
+              <td colspan="6" class="text-center py-4">
+                <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                <p class="lead">No coupons found</p>
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<nav aria-label="Page navigation" class="mt-4">
+  <ul class="pagination justify-content-center">
+    @if(pagination?.prev){
+    <li class="page-item">
+      <button (click)="changePage(pagination.prev)" class="page-link">
+        <i class="fas fa-chevron-left"></i> Previous
+      </button>
+    </li>
+    }
+    @if(pagination?.currentPage!==1){
+    <li class="page-item">
+      <button (click)="changePage(1)" class="page-link">1</button>
+    </li>
+    }
+    <li class="page-item active">
+      <button class="page-link">{{pagination?.currentPage}}</button>
+    </li>
+    @if(pagination?.currentPage!==pagination?.totalPages){
+    <li class="page-item">
+      <button (click)="changePage(pagination.totalPages!)" class="page-link">{{pagination.totalPages}}</button>
+    </li>
+    }
+    @if(pagination?.next){
+    <li class="page-item">
+      <button (click)="changePage(pagination.next)" class="page-link">
+        Next <i class="fas fa-chevron-right"></i>
+      </button>
+    </li>
+    }
+  </ul>
+</nav>

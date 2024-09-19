@@ -1,0 +1,87 @@
+<div class="container py-5">
+  <h1 class="text-center mb-5">Profile Information</h1>
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <div class="row align-items-center">
+        <div class="col-md-4 text-center">
+          <img class="img-fluid rounded-circle mb-3" [src]="userImage+user.image" [alt]="user.name" style="max-width: 200px;">
+        </div>
+        <div class="col-md-8">
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" [value]="user.email" readonly>
+          </div>
+          <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input id="name" class="form-control" type="text" placeholder="Name" (keyup)="this.userName=name.value" #name [value]="user.name">
+          </div>
+          <div class="mb-3">
+            <label for="profileImage" class="form-label">Profile Image</label>
+            <input id="profileImage" class="form-control" (change)="getFile($event)" type="file" accept="image/*">
+          </div>
+          <button (click)="updateLoggedUser()" class="btn btn-primary">
+            <i class="fas fa-save me-2"></i>Update Profile
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<hr class="my-5">
+
+<div class="container py-5">
+  <h1 class="text-center mb-5">Change Password</h1>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <form [formGroup]="passwordForm" (ngSubmit)="changeUserPassword(passwordForm)">
+            <div class="mb-3">
+              <label for="currentPassword" class="form-label">Current Password</label>
+              <input id="currentPassword" formControlName="currentPassword" class="form-control" type="password" placeholder="Current password">
+              @if(passwordForm.get('currentPassword')?.errors !== null && passwordForm.get('currentPassword')?.touched && currentPasswordError === ''){
+                <div class="text-danger mt-2">
+                  @if(passwordForm.get('currentPassword')?.errors?.['required']){<small><i class="fas fa-exclamation-circle me-1"></i>Current password is required</small>}
+                  @if(passwordForm.get('currentPassword')?.errors?.['minlength'] || passwordForm.get('currentPassword')?.errors?.['maxlength']){<small><i class="fas fa-exclamation-circle me-1"></i>Current password must be between 6 and 20 characters</small>}
+                </div>
+              }
+              @if(currentPasswordError !== ''){
+                <div class="text-danger mt-2">
+                  <small><i class="fas fa-exclamation-circle me-1"></i>{{currentPasswordError}}</small>
+                </div>
+              }
+            </div>
+            <div class="mb-3">
+              <label for="newPassword" class="form-label">New Password</label>
+              <input id="newPassword" formControlName="password" class="form-control" type="password" placeholder="New password">
+              @if(passwordForm.get('password')?.errors !== null && passwordForm.get('password')?.touched){
+                <div class="text-danger mt-2">
+                  @if(passwordForm.get('password')?.errors?.['required']){<small><i class="fas fa-exclamation-circle me-1"></i>New password is required</small>}
+                  @if(passwordForm.get('password')?.errors?.['minlength'] || passwordForm.get('password')?.errors?.['maxlength']){<small><i class="fas fa-exclamation-circle me-1"></i>New password must be between 6 and 20 characters</small>}
+                </div>
+              }
+            </div>
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label">Confirm New Password</label>
+              <input id="confirmPassword" formControlName="confirmPassword" class="form-control" type="password" placeholder="Confirm new password">
+              @if(passwordForm.get('confirmPassword')?.errors !== null && passwordForm.get('confirmPassword')?.touched && passwordError === ''){
+                <div class="text-danger mt-2">
+                  @if(passwordForm.get('confirmPassword')?.errors?.['required']){<small><i class="fas fa-exclamation-circle me-1"></i>Confirm password is required</small>}
+                  @if(passwordForm.get('confirmPassword')?.errors?.['minlength'] || passwordForm.get('confirmPassword')?.errors?.['maxlength']){<small><i class="fas fa-exclamation-circle me-1"></i>Confirm password must be between 6 and 20 characters</small>}
+                </div>
+              }
+              @if(passwordError !== ''){
+                <div class="text-danger mt-2">
+                  <small><i class="fas fa-exclamation-circle me-1"></i>{{passwordError}}</small>
+                </div>
+              }
+            </div>
+            <button type="submit" [disabled]="passwordForm.invalid" class="btn btn-primary w-100">
+              <i class="fas fa-lock me-2"></i>Update Password
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

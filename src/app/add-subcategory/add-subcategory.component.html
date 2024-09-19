@@ -1,0 +1,70 @@
+
+<div class="subcategory-container">
+  <div class="card">
+    <div class="card-body">
+      <h2 class="card-title text-center mb-4">
+        <i class="fas fa-folder-plus me-2"></i>Add Subcategory
+      </h2>
+      <form [formGroup]="subcategoryForm" (ngSubmit)="createSubcategory(subcategoryForm)">
+        <div class="mb-3">
+          <label for="subcategoryName" class="form-label">Subcategory Name</label>
+          <div class="input-group">
+            <span class="input-group-text">
+              <i class="fas fa-tag"></i>
+            </span>
+            <input 
+              id="subcategoryName"
+              formControlName="name" 
+              class="form-control" 
+              type="text" 
+              placeholder="Enter subcategory name"
+              [class.is-invalid]="subcategoryForm.get('name')?.invalid && subcategoryForm.get('name')?.touched"
+            >
+          </div>
+          @if(subcategoryForm.get('name')?.invalid && subcategoryForm.get('name')?.touched) {
+            <div class="invalid-feedback d-block">
+              @if(subcategoryForm.get('name')?.errors?.['required']) {
+                <p><i class="fas fa-exclamation-circle me-1"></i>Subcategory name is required</p>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label for="categorySelect" class="form-label">Parent Category</label>
+          <div class="input-group">
+            <span class="input-group-text">
+              <i class="fas fa-sitemap"></i>
+            </span>
+            <select 
+              id="categorySelect"
+              formControlName="category" 
+              class="form-select"
+              [class.is-invalid]="subcategoryError !== ''"
+            >
+              <option value="" disabled selected>Choose category</option>
+              @for(category of categories; track category._id) {
+                <option [value]="category._id">{{category.name}}</option>
+              }
+            </select>
+          </div>
+          @if(subcategoryError !== '') {
+            <div class="invalid-feedback d-block">
+              <p><i class="fas fa-exclamation-circle me-1"></i>{{subcategoryError}}</p>
+            </div>
+          }
+        </div>
+
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+          <a routerLink="/subcategories" class="btn btn-outline-secondary me-md-2">
+            <i class="fas fa-times me-1"></i>Cancel
+          </a>
+          <button type="submit" class="btn btn-primary" [disabled]="subcategoryForm.invalid">
+            <i class="fas fa-plus-circle me-1"></i>Create Subcategory
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+

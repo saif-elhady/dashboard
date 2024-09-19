@@ -1,0 +1,111 @@
+
+<div class="products-container">
+  <h2 class="text-center mb-4">
+    <i class="fas fa-box me-2"></i>All Products
+  </h2>
+  
+  <div class="card">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <a class="btn btn-primary" routerLink="create">
+          <i class="fas fa-plus-circle me-2"></i>Create Product
+        </a>
+        <div class="search-wrapper">
+          <i class="fas fa-search search-icon"></i>
+          <input (input)="searchData(searchInput.value)" #searchInput class="form-control search-input" type="search"
+            placeholder="Search products" aria-label="Search">
+        </div>
+      </div>
+      
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>ID</th>
+              <th>Product</th>
+              <th>Category</th>
+              <th>Subcategory</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Sold</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for(product of products; track product._id) {
+            <tr>
+              <td>{{$index + 1}}</td>
+              <td><span class="badge bg-secondary">{{product?._id|slice:-4}}</span></td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <img class="me-2" width="50px" [src]="productImage+product?.cover" [alt]="product?.name">
+                  <span>{{product?.name}}</span>
+                </div>
+              </td>
+              <td><span class="badge bg-info text-dark">{{product?.category?.name}}</span></td>
+              <td><span class="badge bg-light text-dark">{{product?.subcategory?.name}}</span></td>
+              <td>{{product?.price|currency}}</td>
+              <td>{{product?.quantity}}</td>
+              <td>{{product?.sold}}</td>
+              <td>
+                <div class="btn-group" role="group">
+                  <a [routerLink]="['/products',product._id]" class="btn btn-outline-primary btn-sm">
+                    <i class="fas fa-info-circle me-1"></i>Details
+                  </a>
+                  <a [routerLink]="['/products',product._id,'update']" class="btn btn-outline-secondary btn-sm">
+                    <i class="fas fa-edit me-1"></i>Update
+                  </a>
+                  <button (click)="deleteProduct(product._id)" class="btn btn-outline-danger btn-sm">
+                    <i class="fas fa-trash-alt me-1"></i>Delete
+                  </button>
+                </div>
+              </td>
+            </tr>
+            }
+            @empty {
+            <tr>
+              <td colspan="9" class="text-center py-4">
+                <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
+                <p class="lead">No products found</p>
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <nav aria-label="Product pagination" class="mt-4">
+        <ul class="pagination justify-content-center">
+          @if(pagination.prev) {
+          <li class="page-item">
+            <button (click)="changePage(pagination.prev)" class="page-link">
+              <i class="fas fa-chevron-left me-1"></i>Previous
+            </button>
+          </li>
+          }
+          @if(pagination.currentPage !== 1) {
+          <li class="page-item">
+            <button (click)="changePage(1)" class="page-link">1</button>
+          </li>
+          }
+          <li class="page-item active">
+            <button class="page-link">{{pagination.currentPage}}</button>
+          </li>
+          @if(pagination.currentPage !== pagination.totalPages) {
+          <li class="page-item">
+            <button (click)="changePage(pagination.totalPages!)" class="page-link">{{pagination.totalPages}}</button>
+          </li>
+          }
+          @if(pagination.next) {
+          <li class="page-item">
+            <button (click)="changePage(pagination.next)" class="page-link">
+              Next<i class="fas fa-chevron-right ms-1"></i>
+            </button>
+          </li>
+          }
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>

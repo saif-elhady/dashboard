@@ -1,0 +1,116 @@
+<div class="container-fluid mt-5">
+  <h2 class="text-center mb-4">All Orders</h2>
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <div class="d-flex justify-content-end mb-3">
+        <div class="input-group w-auto">
+          <input (change)="searchData(searchInput.value)" #searchInput class="form-control" type="search"
+            placeholder="Search orders" aria-label="Search">
+          <span class="input-group-text"><i class="fas fa-search"></i></span>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead class="table-light">
+            <tr>
+              <th>#</th>
+              <th>ID</th>
+              <th>User</th>
+              <th>Products</th>
+              <th>Payment</th>
+              <th>Delivered</th>
+              <th>Deliver time</th>
+              <th>Paid</th>
+              <th>Pay time</th>
+              <th>Tax price</th>
+              <th>Total price</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for(order of orders; track order._id){
+            <tr>
+              <td>{{$index + 1}}</td>
+              <td><span class="badge bg-secondary">{{order?._id|slice:-4}}</span></td>
+              <td>{{order?.user?.name}}</td>
+              <td>
+                @for(item of order.cartItems; track item._id){
+                <div class="d-flex align-items-center mb-2">
+                  <img class="me-2" width="50px" [src]="productsImage+item?.product?.cover" [alt]="item?.product?.name">
+                  <span>{{item?.product?.name}}</span>
+                </div>
+                }
+              </td>
+              <td>{{order?.paymentMethod}}</td>
+              <td>
+                <span class="badge" [ngClass]="{'bg-success': order?.isDelivered, 'bg-warning': !order?.isDelivered}">
+                  {{order?.isDelivered ? 'Yes' : 'No'}}
+                </span>
+              </td>
+              <td>{{order?.deliveredAt ? (order?.deliveredAt|date) : '-----'}}</td>
+              <td>
+                <span class="badge" [ngClass]="{'bg-success': order?.isPaid, 'bg-warning': !order?.isPaid}">
+                  {{order?.isPaid ? 'Yes' : 'No'}}
+                </span>
+              </td>
+              <td>{{order?.paidAt ? (order?.paidAt|date) : '-----'}}</td>
+              <td>{{order?.taxPrice|currency}}</td>
+              <td>{{order?.totalPrice|currency}}</td>
+              <td>
+                <button [disabled]="order.isDelivered" (click)="updateDelivered(order._id)"
+                  class="btn btn-outline-primary btn-sm mb-1">
+                  <i class="fas fa-truck"></i> Deliver
+                </button>
+                <button [disabled]="order.isPaid" (click)="updatePaid(order._id)"
+                  class="btn btn-outline-success btn-sm">
+                  <i class="fas fa-money-bill-wave"></i> Pay
+                </button>
+              </td>
+            </tr>
+            }
+            @empty {
+            <tr>
+              <td colspan="12" class="text-center py-4">
+                <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
+                <p class="lead">No orders found</p>
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<nav aria-label="Page navigation" class="mt-4">
+  <ul class="pagination justify-content-center">
+    @if(pagination?.prev){
+    <li class="page-item">
+      <button (click)="changePage(pagination.prev)" class="page-link">
+        <i class="fas fa-chevron-left"></i> Previous
+      </button>
+    </li>
+    }
+    @if(pagination?.currentPage!==1){
+    <li class="page-item">
+      <button (click)="changePage(1)" class="page-link">1</button>
+    </li>
+    }
+    <li class="page-item active">
+      <button class="page-link">{{pagination?.currentPage}}</button>
+    </li>
+    @if(pagination?.currentPage!==pagination?.totalPages){
+    <li class="page-item">
+      <button (click)="changePage(pagination.totalPages!)" class="page-link">{{pagination.totalPages}}</button>
+    </li>
+    }
+    @if(pagination?.next){
+    <li class="page-item">
+      <button (click)="changePage(pagination.next)" class="page-link">
+        Next <i class="fas fa-chevron-right"></i>
+      </button>
+    </li>
+    }
+  </ul>
+</nav>

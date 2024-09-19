@@ -1,0 +1,46 @@
+.card {
+    border: none;
+    transition: box-shadow 0.3s ease-in-out;
+  
+    &:hover {
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+    }
+  }
+  
+  .table {
+    th, td {
+      vertical-align: middle;
+    }
+  }
+  
+  .btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+  }
+  
+  .badge {
+    font-size: 0.875rem;
+  }
+  
+  .pagination {
+    .page-link {
+      color: #007bff;
+      &:hover {
+        color: #0056b3;
+      }
+    }
+    .active .page-link {
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+  }
+  
+  .input-group-text {
+    background-color: #f8f9fa;
+    border-left: none;
+  }
+  
+  .form-control:focus {
+    box-shadow: none;
+    border-color: #ced4da;
+  }

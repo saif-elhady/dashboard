@@ -1,0 +1,50 @@
+
+<div class="category-container">
+  <div class="card">
+    <div class="card-body">
+      <h2 class="card-title text-center mb-4">
+        <i class="fas fa-folder-plus me-2"></i>Add Category
+      </h2>
+      <form [formGroup]="categoryForm" (ngSubmit)="createCategory(categoryForm)">
+        <div class="mb-3">
+          <label for="categoryName" class="form-label">Category Name</label>
+          <div class="input-group">
+            <span class="input-group-text">
+              <i class="fas fa-tag"></i>
+            </span>
+            <input 
+              id="categoryName"
+              formControlName="name" 
+              class="form-control" 
+              type="text" 
+              placeholder="Enter category name"
+              [class.is-invalid]="categoryForm.get('name')?.invalid && categoryForm.get('name')?.touched"
+            >
+          </div>
+          @if(categoryForm.get('name')?.invalid && categoryForm.get('name')?.touched) {
+            <div class="invalid-feedback d-block">
+              @if(categoryForm.get('name')?.errors?.['required']) {
+                <p><i class="fas fa-exclamation-circle me-1"></i>Category name is required</p>
+              }
+            </div>
+          }
+          @if(categoryError !== '') {
+            <div class="alert alert-danger mt-3">
+              <i class="fas fa-exclamation-triangle me-1"></i>{{categoryError}}
+            </div>
+          }
+        </div>
+
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+          <a routerLink="/categories" class="btn btn-outline-secondary me-md-2">
+            <i class="fas fa-times me-1"></i>Cancel
+          </a>
+          <button type="submit" class="btn btn-primary" [disabled]="categoryForm.invalid">
+            <i class="fas fa-plus-circle me-1"></i>Create Category
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,40 @@
+
+.container {
+  max-width: 800px;
+}
+
+h2 {
+  color: #007bff;
+  font-weight: 600;
+}
+
+.form-label {
+  font-weight: 500;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  
+  &:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+  }
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  
+  &:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+  }
+}
+
+.form-control, .form-select {
+  &:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
+}

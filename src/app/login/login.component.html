@@ -1,0 +1,61 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+      <div class="card shadow-lg border-0 rounded-lg">
+        <div class="card-header bg-primary text-white text-center py-4">
+          <h2 class="mb-0"><i class="fas fa-user-circle fa-2x mb-3"></i><br>Login</h2>
+        </div>
+        <div class="card-body p-4">
+          <form [formGroup]="loginForm" (ngSubmit)="login(loginForm)">
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                <input id="email" formControlName="email" class="form-control" type="email" placeholder="Enter your email">
+              </div>
+              @if(loginForm.get('email')?.errors !== null && loginForm.get('email')?.touched){
+                <div class="text-danger mt-2">
+                  @if(loginForm.get('email')?.errors?.['required']){<small><i class="fas fa-exclamation-circle me-1"></i>Email is required</small>}
+                  @if(loginForm.get('email')?.errors?.['email']){<small><i class="fas fa-exclamation-circle me-1"></i>Invalid email format</small>}
+                </div>
+              }
+              @if(invalidLogin !== ''){
+                <div class="alert alert-danger mt-2" role="alert">
+                  <i class="fas fa-exclamation-triangle me-1"></i>{{invalidLogin}}
+                </div>
+              }
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                <input id="password" formControlName="password" class="form-control" type="password" placeholder="Enter your password">
+              </div>
+              @if(loginForm.get('password')?.errors !== null && loginForm.get('password')?.touched){
+                <div class="text-danger mt-2">
+                  @if(loginForm.get('password')?.errors?.['required']){<small><i class="fas fa-exclamation-circle me-1"></i>Password is required</small>}
+                  @if(loginForm.get('password')?.errors?.['minlength'] || loginForm.get('password')?.errors?.['maxlength']){<small><i class="fas fa-exclamation-circle me-1"></i>Password must be between 6 and 20 characters</small>}
+                </div>
+              }
+            </div>
+            <div class="form-check mb-3">
+              <input class="form-check-input" type="checkbox" id="rememberMe">
+              <label class="form-check-label" for="rememberMe">Remember me</label>
+            </div>
+            <div class="d-grid gap-2">
+              <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary btn-lg">
+                <i class="fas fa-sign-in-alt me-2"></i>Login
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="card-footer text-center py-3">
+          <a routerLink="/forgetPassword" class="text-decoration-none">
+            <i class="fas fa-key me-2"></i>Forgot Password?
+          </a>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

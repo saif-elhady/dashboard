@@ -1,0 +1,111 @@
+.category-container {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  
+    h2 {
+      color: #2c3e50;
+      font-weight: 600;
+    }
+  
+    .category-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  
+      .btn-primary {
+        background-color: #3498db;
+        border-color: #3498db;
+        transition: all 0.3s ease;
+  
+        &:hover {
+          background-color: #2980b9;
+          border-color: #2980b9;
+        }
+      }
+  
+      .search-wrapper {
+        position: relative;
+        width: 250px;
+  
+        .search-icon {
+          position: absolute;
+          left: 10px;
+          top: 50%;
+          transform: translateY(-50%);
+          color: #7f8c8d;
+        }
+  
+        .search-input {
+          padding-left: 35px;
+          border-radius: 20px;
+          border: 1px solid #bdc3c7;
+          transition: all 0.3s ease;
+  
+          &:focus {
+            box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+            border-color: #3498db;
+          }
+        }
+      }
+    }
+  
+    .table {
+      th {
+        font-weight: 600;
+        color: #34495e;
+      }
+  
+      td {
+        vertical-align: middle;
+      }
+  
+      .badge {
+        font-size: 0.85em;
+      }
+  
+      .btn-sm {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.875rem;
+      }
+    }
+  
+    .pagination {
+      .page-link {
+        color: #3498db;
+        border-color: #3498db;
+        
+        &:hover {
+          background-color: #3498db;
+          color: #fff;
+        }
+      }
+  
+      .active .page-link {
+        background-color: #3498db;
+        border-color: #3498db;
+      }
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .category-container {
+      padding: 1rem;
+  
+      .category-actions {
+        flex-direction: column;
+        align-items: stretch;
+  
+        .btn-primary {
+          margin-bottom: 1rem;
+        }
+  
+        .search-wrapper {
+          width: 100%;
+        }
+      }
+    }
+  }
